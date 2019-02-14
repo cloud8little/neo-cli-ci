@@ -1,0 +1,18 @@
+#!/usr/bin/expect
+cd /home/zhangtao/workspace/test/node/neo-cli4/
+set timeout 5
+spawn dotnet /home/zhangtao/workspace/test/node/neo-cli4/neo-cli.dll --rpc
+set timeout 5
+expect "*neo>"
+send_user \nSTART_CLI_COMMAND-send-0\n
+send "send 025d82f7b00a9ff1cfe709abe3c4741a105d067178e645bc3ebad9bc79af47d4 AHwmcxyxUva8Do8swvWeS2EkdUzhZ9JP7A 10 0\r"
+expect "*password:"
+send "11111111\r"
+set timeout 5
+expect "*neo>"
+send_user \nFINISH_CLI_COMMAND-send-0\n
+set timeout 5
+
+set timeout 5
+expect "*neo>"
+send "exit\r"
