@@ -9,7 +9,7 @@
 			"listenport" : 10001,
 			"stport" : 23606,
 			"walletname" : "wallet_1.json",
-			"path" : "/opt/nodes/neo-cli/neo-cli.dll"
+			"path" : "/home/neo/nodes/neo-cli/neo-cli.dll"
 		},
 		{
 			"ip": "172.18.12.1",
@@ -20,7 +20,7 @@
 			"listenport" : 20001,
 			"stport" : 23616,
 			"walletname" : "wallet_2.json",
-			"path" : "/opt/nodes/neo-cli1/neo-cli.dll"
+			"path" : "/home/neo/nodes/neo-cli1/neo-cli.dll"
 		},
 		{
 			"ip": "172.18.12.1",
@@ -31,7 +31,7 @@
 			"listenport" : 30001,
 			"stport" : 23626,
 			"walletname" : "wallet_3.json",
-			"path" : "/opt/nodes/neo-cli2/neo-cli.dll"
+			"path" : "/home/neo/nodes/neo-cli2/neo-cli.dll"
 		},
 		{
 			"ip": "172.18.12.1",
@@ -42,7 +42,7 @@
 			"listenport" : 40001,
 			"stport" : 23636,
 			"walletname" : "wallet_4.json",
-			"path" : "/opt/nodes/neo-cli3/neo-cli.dll"
+			"path" : "/home/neo/nodes/neo-cli3/neo-cli.dll"
 		},
 		{
 			"ip": "localhost",
@@ -53,7 +53,7 @@
 			"listenport" : 50001,
 			"stport" : 23646,
 			"walletname" : "wallet_5.json",
-			"path" : "/opt/nodes/neo-cli4/neo-cli.dll"
+			"path" : "/home/neo/nodes/neo-cli4/neo-cli.dll"
 		}
 	],
 	"WALLETS": [

@@ -28,12 +28,3 @@ RUN pip3 install requests \
     numpy \
     pexpect
 RUN echo "root:123" | chpasswd
-WORKDIR /opt
-ADD ci2/Test-master /opt/Test-master
-RUN mkdir /opt/nodes
-RUN chmod +x /opt/Test-master/consensus.sh
-RUN chmod +x /opt/Test-master/init.sh
-RUN chmod +x /opt/Test-master/service/run.sh
-WORKDIR /opt/Test-master
-CMD ./consensus.sh
-

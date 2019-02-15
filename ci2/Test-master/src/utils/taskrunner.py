@@ -17,7 +17,7 @@ class TaskRunner:
     # process_log： 是否需要记录运行log
     # 返回值: (result: True or False, response: 网络请求)
     @staticmethod
-    def run_single_task(task, judge=True, process_log=True):
+    def run_single_task(task, judge=True, process_log=False):
         connecttype = task.type()
         name = task.name()
         start_time = time.time()
@@ -42,7 +42,8 @@ class TaskRunner:
             node_ip = Config.NODES[int(node_index)]["ip"] + ":" + str(Config.NODES[int(node_index)]["rpcport"])
         if connecttype.lower() == "st":
             node_ip = Config.NODES[int(node_index)]["ip"] + ":" + str(Config.NODES[int(node_index)]["stport"])
-        logger.print("run on service(" + str(node_index) + "):  " + node_ip)
+        if process_log:
+            logger.print("run on service(" + str(node_index) + "):  " + node_ip)
 
         response = utils.connect.con(connecttype, node_ip, cfg_request)
         if process_log:

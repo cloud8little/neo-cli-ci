@@ -27,7 +27,7 @@ logger.addHandler(console)
 np.set_printoptions(precision=16, suppress=True)
 class SelfCheck():
     def __init__(self):
-        self.remote_tmp_dir = "/home/zhangtao/.test/"
+        self.remote_tmp_dir = "/home/neo/"
         pass
 
     def stop_nodes(self):

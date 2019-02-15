@@ -4,5 +4,8 @@ services:
   - docker
 
 script:
-  - docker build -f ci/Dockerfile -t neo-cli-ci .
-  - docker run neo-cli-ci /opt/ci/run-tests-in-docker.sh
+- docker build -f ci2/consensus-container/Dockerfile -t consensus .
+- docker build -f ci2/ordinary-container/Dockerfile -t ordinary .
+- docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1 neonet
+- docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
+- docker run --name ord --network=neonet --ip 172.18.12.2 ordinary
