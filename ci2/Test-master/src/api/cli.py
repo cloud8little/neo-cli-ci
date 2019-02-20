@@ -636,3 +636,14 @@ class CLIApi:
         # register except function
         self.stepexceptfuncs[name + "-" + str(self.stepindex)] = exceptfunc
         self.endcmd(name)
+
+    # install plugin   安装插件
+    def install_plugin(self, plugin=None, exceptfunc=None):
+        name = "install_plugin"
+        if plugin is not None:
+            self.begincmd(name)
+            self.writesend("install " + plugin)
+            self.waitnext()
+            # register except function
+            self.stepexceptfuncs[name + "-" + str(self.stepindex)] = exceptfunc
+            self.endcmd(name)

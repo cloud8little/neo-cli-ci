@@ -202,6 +202,9 @@ def cli_export_blocks(**kwargs):
 def cli_start_consensus(**kwargs):
     return cli.start_consensus(eval_exceptfunc(kwargs["exceptfunc"]))
 
+@dispatcher.add_method
+def cli_install_plugin(**kwargs):
+    return cli.install_plugin(eval_exceptfunc(kwargs["exceptfunc"]))
 
 @Request.application
 def application(request):
@@ -239,6 +242,7 @@ def application(request):
     dispatcher["cli_export_all_blocks"] = cli_export_all_blocks
     dispatcher["cli_export_blocks"] = cli_export_blocks
     dispatcher["cli_start_consensus"] = cli_start_consensus
+    dispatcher["cli_install_plugin"] = cli_install_plugin
 
     response = JSONRPCResponseManager.handle(request.data, dispatcher)
     responseobj = json.loads(response.json)

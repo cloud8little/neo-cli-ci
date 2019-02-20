@@ -579,7 +579,7 @@ namespace Neo.Shell
             if (txs is null) return true;
             foreach (ClaimTransaction tx in txs)
                 if (tx != null)
-                    Console.WriteLine($"Transaction Succeeded: {tx.Hash}");
+                    Console.WriteLine($"Tranaction Suceeded: {tx.Hash}");
             return true;
         }
 
@@ -821,29 +821,22 @@ namespace Neo.Shell
         private bool OnShowStateCommand(string[] args)
         {
             bool stop = false;
-            Console.CursorVisible = false;
-            Console.Clear();
-            Task task = Task.Run(() =>
+            Task.Run(() =>
             {
                 while (!stop)
                 {
-                    Console.SetCursorPosition(0, 0);
                     uint wh = 0;
                     if (Program.Wallet != null)
                         wh = (Program.Wallet.WalletHeight > 0) ? Program.Wallet.WalletHeight - 1 : 0;
-                    WriteLineWithoutFlicker($"block: {wh}/{Blockchain.Singleton.Height}/{Blockchain.Singleton.HeaderHeight}  connected: {LocalNode.Singleton.ConnectedCount}  unconnected: {LocalNode.Singleton.UnconnectedCount}");
+                    Console.Clear();
+                    Console.WriteLine($"block: {wh}/{Blockchain.Singleton.Height}/{Blockchain.Singleton.HeaderHeight}  connected: {LocalNode.Singleton.ConnectedCount}  unconnected: {LocalNode.Singleton.UnconnectedCount}");
                     foreach (RemoteNode node in LocalNode.Singleton.GetRemoteNodes().Take(Console.WindowHeight - 2))
-                        WriteLineWithoutFlicker($"  ip: {node.Remote.Address}\tport: {node.Remote.Port}\tlisten: {node.ListenerPort}\theight: {node.Version?.StartHeight}");
-                    while (Console.CursorTop + 1 < Console.WindowHeight)
-                        WriteLineWithoutFlicker();
+                        Console.WriteLine($"  ip: {node.Remote.Address}\tport: {node.Remote.Port}\tlisten: {node.ListenerPort}\theight: {node.Version?.StartHeight}");
                     Thread.Sleep(500);
                 }
             });
             Console.ReadLine();
             stop = true;
-            task.Wait();
-            Console.WriteLine();
-            Console.CursorVisible = true;
             return true;
         }
 
@@ -894,7 +887,7 @@ namespace Neo.Shell
                 }
             store = new LevelDBStore(Path.GetFullPath(Settings.Default.Paths.Chain));
             system = new NeoSystem(store);
-            system.StartNode(Settings.Default.P2P.Port, Settings.Default.P2P.WsPort, Settings.Default.P2P.MinDesiredConnections, Settings.Default.P2P.MaxConnections);
+            system.StartNode(Settings.Default.P2P.Port, Settings.Default.P2P.WsPort);
             if (Settings.Default.UnlockWallet.IsActive)
             {
                 try
@@ -1045,12 +1038,6 @@ namespace Neo.Shell
                 nep6wallet.Unlock(password);
                 return nep6wallet;
             }
-        }
-
-        private static void WriteLineWithoutFlicker(string message = "")
-        {
-            Console.Write(message);
-            Console.Write(new string(' ', Console.BufferWidth - Console.CursorLeft));
         }
     }
 }

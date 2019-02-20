@@ -210,3 +210,7 @@ class CLIRPCApi:
     # start consensus   启动共识
     def start_consensus(self, exceptfunc=None):
         return self.simplerun("cli_start_consensus", {"exceptfunc": exceptfunc})
+
+    # install plugin   安装插件
+    def install_plugin(self, plugin=None, exceptfunc=None):
+        return self.simplerun("cli_install_plugin", {"plugin": plugin,"exceptfunc": exceptfunc})
