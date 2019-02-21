@@ -17,7 +17,7 @@ class TaskRunner:
     # process_log： 是否需要记录运行log
     # 返回值: (result: True or False, response: 网络请求)
     @staticmethod
-    def run_single_task(task, judge=True, process_log=False):
+    def run_single_task(task, judge=True, process_log=True):
         connecttype = task.type()
         name = task.name()
         start_time = time.time()

@@ -41,13 +41,12 @@ class SelfCheck():
                     API.clirpc(node_index).init("start_node", Config.NODES[node_index]["path"])
                     API.clirpc(node_index).exec(False)
     def install_plugin(self):
+        logger.info("installing plugins")
         for node_index in range(len(Config.NODES)):
             API.clirpc(node_index).init("install_plugin", Config.NODES[node_index]["path"])
             API.clirpc(node_index).install_plugin("ImportBlocks")
-            if "consensusnode" in Config.NODES[node_index]:
-                if Config.NODES[node_index]["consensusnode"]:
-                    API.clirpc(node_index).install_plugin("SimplePolicy")
             API.clirpc(node_index).exec(False)
+            
     def clear_nodes(self):
         logger.info("----------------------------------")
         logger.info("begin clear nodes\n")
@@ -108,7 +107,6 @@ class SelfCheck():
         self.stop_nodes()
         self.clear_nodes()
         self.copy_node()
-        self.start_nodes()
         self.install_plugin()
         self.stop_nodes()
         self.start_nodes()

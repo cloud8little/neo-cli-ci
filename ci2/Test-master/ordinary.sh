@@ -5,4 +5,4 @@ cd service
 cd ../tools
 python3 init_selfchecker.py
 cd ../src/test
-python3 run_alltest.py
+./run.sh

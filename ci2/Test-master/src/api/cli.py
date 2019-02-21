@@ -40,7 +40,7 @@ class CLIReadThread(threading.Thread):
         self.readlines = ""
 
     def run(self):
-        # trycount = 0
+        trycount = 0
         while True:
             if self.terminate is True:
                 self.process.wait()
@@ -65,8 +65,9 @@ class CLIReadThread(threading.Thread):
                     # break
                 # else:
                     # trycount += 1
-                self.statefinish = True
-                time.sleep(0.5)
+                if 2 < trycount:
+                    self.statefinish = True
+                    time.sleep(0.5)
 
 
 class CLIApi:
@@ -192,7 +193,14 @@ class CLIApi:
                         self.process.stdin.write("\n")
                         self.process.stdin.flush()
                         return True
-
+    def showScript(self):
+        if self.logfile is not None:
+            logger.info("showScript: logfile is not None")
+            return
+        f = open("./" + self.scriptpath)
+        script = f.read()
+        f.close()
+        logger.info("[showScript] script: {0}".format(script))
     def exec(self, exitatlast=True):
         if exitatlast:
             self.writeline("set timeout 5\n")
@@ -204,6 +212,7 @@ class CLIApi:
         msg = ""
         self.logfile.close()
         self.logfile = None
+        self.showScript()
         self.process = subprocess.Popen("./" + self.scriptpath, shell=False, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
         self.process_pid = self.process.pid
         print("PID:", self.process_pid)
@@ -224,6 +233,7 @@ class CLIApi:
                     time.sleep(0.5)
 
         msgblocks = {}
+        logger.info("[exec] lines: {0}".format(msg))
         lines = msg.split('\n')
         newblockindex = -1
         newblockname = ""

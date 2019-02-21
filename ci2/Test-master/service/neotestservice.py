@@ -204,7 +204,7 @@ def cli_start_consensus(**kwargs):
 
 @dispatcher.add_method
 def cli_install_plugin(**kwargs):
-    return cli.install_plugin(eval_exceptfunc(kwargs["exceptfunc"]))
+    return cli.install_plugin(kwargs["plugin"], eval_exceptfunc(kwargs["exceptfunc"]))
 
 @Request.application
 def application(request):
