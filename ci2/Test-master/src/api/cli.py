@@ -53,6 +53,7 @@ class CLIReadThread(threading.Thread):
             line = self.process.stdout.readline()
             readlock.release()
             if line != "":
+                trycount = 0
                 self.readlines += re.sub('\x1b.*?m', '', line).replace("\x00", "").replace("\x1b[H\x1b[2J", "")
                 logger.print(self.name + "--" + re.sub('\x1b.*?m', '', line).replace("\x00", "").replace("\x1b[H\x1b[2J", ""))
                 pass
@@ -68,6 +69,8 @@ class CLIReadThread(threading.Thread):
                 if 2 < trycount:
                     self.statefinish = True
                     time.sleep(0.5)
+                else:
+                    trycount += 1
 
 
 class CLIApi:
