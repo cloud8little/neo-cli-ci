@@ -47,7 +47,7 @@ class NodeApi:
         ijson["REQUEST"] = request
         ijson["RESPONSE"] = None
         task = Task(name=rpcmethod, ijson=ijson)
-        (result, response) = TaskRunner.run_single_task(task, True)
+        (result, response) = TaskRunner.run_single_task(task, True, False)
         if response is None:
             raise Exception("cli rpc connect error")
         if response["jsonrpc"] != jsonrpc:
