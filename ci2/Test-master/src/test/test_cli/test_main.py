@@ -1570,7 +1570,7 @@ class test_cli(ParametrizedTestCase):
             API.cli().open_wallet(test_config.wallet_name_json, test_config.wallet_password)
             API.cli().import_key(test_config.path_wrong,exceptfunc = lambda msg: msg.find("error") >=0 )
             (result, stepname, climsg) = API.cli().exec()
-            logger.print(climsg)
+            logger.info("[test_065_importkey] climsg: {0}".format(climsg))
             fp.close()            
             f.close()            
             self.ASSERT(result, "error message not match")
@@ -1853,7 +1853,7 @@ class test_cli(ParametrizedTestCase):
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
             API.cli().list_address()
             filename=test_config.wrongfilename
-            API.cli().export_key(test_config.wallet_pwd,WalletManager().wallet(test_config.node_default).account().address(),filename, exceptfunc=lambda msg: msg.find("error")>= 0)
+            API.cli().export_key(test_config.wallet_pwd,WalletManager().wallet(test_config.node_default).account().address(),filename, exceptfunc=lambda msg: msg.find("error") < 0)
             (result, stepname, climsg) = API.cli().exec()
             logger.print(climsg)
             self.ASSERT(result, "assert not equal")
@@ -3801,14 +3801,10 @@ class test_cli(ParametrizedTestCase):
     def test_135_shownode(self):
         try:
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
-            API.cli().show_node()
+            API.cli().show_node(exceptfunc=lambda msg: msg.find("error: command not found") >= 0)
             (result, stepname, msg) = API.cli().exec()
-            logger.print(msg)
-            #检查log,有error直接报错
-            flag=True
-            if msg.find("error")>=0:
-                flag=False
-            self.ASSERT(flag,"assert not equal")
+            logger.info("[test_135_shownode] msg: {0}".format(msg))
+            self.ASSERT(result,"assert not equal")
         except AssertError as e:
             logger.error(e.msg)
             self.ASSERT(False, "error:assert")
@@ -3928,7 +3924,7 @@ class test_cli(ParametrizedTestCase):
             shutil.copyfile(test_config.copypath+"chain.acc", fpath+"chain.acc")
             print ("copy file chain.acc success")
             #把protocol.json文件替换为SeedList未被删除的文件
-            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(node_index + 1) + "/protocol.json", fpath+"protocol.json")
+            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(test_config.node_default) + "/protocol.json", fpath+"protocol.json")
             #启动节点
             API.cli().init(self._testMethodName, Config.NODES[test_config.node_default]["path"])
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
@@ -4036,7 +4032,7 @@ class test_cli(ParametrizedTestCase):
             shutil.copyfile(test_config.copypath+"chain.acc", fpath+"chain.acc")
             print ("copy file chain.acc success")
             #把protocol.json文件替换为SeedList未被删除的文件
-            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(node_index + 1) + "/protocol.json", fpath+"protocol.json")
+            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(test_config.node_default) + "/protocol.json", fpath+"protocol.json")
             #启动节点
             API.cli().init(self._testMethodName, Config.NODES[test_config.node_default]["path"])
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
@@ -4148,7 +4144,7 @@ class test_cli(ParametrizedTestCase):
             shutil.copyfile(test_config.copypath+"chain.acc", fpath+"chain.acc")
             print ("copy file chain.acc success")
             #把protocol.json文件替换为SeedList未被删除的文件
-            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(node_index + 1) + "/protocol.json", fpath+"protocol.json")
+            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(test_config.node_default) + "/protocol.json", fpath+"protocol.json")
             #启动节点
             API.cli().init(self._testMethodName, Config.NODES[test_config.node_default]["path"])
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
