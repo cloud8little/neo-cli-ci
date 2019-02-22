@@ -46,7 +46,7 @@ class CLIReadThread(threading.Thread):
                 self.process.wait()
                 self.process.stdout.close()
                 self.process.stdin.close()
-                logger.print("msg thread terminate success.")
+                logger.info("[ReadThread] msg thread terminate success.")
                 break
             global readlock
             readlock.acquire()
@@ -55,7 +55,7 @@ class CLIReadThread(threading.Thread):
             if line != "":
                 trycount = 0
                 self.readlines += re.sub('\x1b.*?m', '', line).replace("\x00", "").replace("\x1b[H\x1b[2J", "")
-                logger.print(self.name + "--" + re.sub('\x1b.*?m', '', line).replace("\x00", "").replace("\x1b[H\x1b[2J", ""))
+                logger.info("[ReadThread] "+ self.name + "--" + re.sub('\x1b.*?m', '', line).replace("\x00", "").replace("\x1b[H\x1b[2J", ""))
                 pass
             else:
                 # if trycount > 2:
@@ -218,7 +218,7 @@ class CLIApi:
         self.showScript()
         self.process = subprocess.Popen("./" + self.scriptpath, shell=False, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
         self.process_pid = self.process.pid
-        print("PID:", self.process_pid)
+        logger.info("[exec] subprocess PID: {0}".format(self.process_pid))
         self.readthread = CLIReadThread(self.process, self.scriptname)
         self.readthread.start()
         while True:
@@ -256,7 +256,6 @@ class CLIApi:
                     else:
                         msgblocks[newblockname + "-" + newblockindex] = ""
 
-        print(self.stepexceptfuncs)
         for key in self.stepexceptfuncs.keys():
             exceptfunc = self.stepexceptfuncs[key]
             if exceptfunc is None:
@@ -264,10 +263,10 @@ class CLIApi:
             else:
                 exceptret = False
                 if key in msgblocks.keys():
-                    print("compare step result: ", key, "   ", type(msgblocks[key]))
-                    print("exceptfunc", msgblocks)
+                    logger.info("[exec] compare step result: {0}, {1} ".format(key, type(msgblocks[key])))
+                    logger.info("[exec] exceptfunc: {0}".format(msgblocks))
                     exceptret = exceptfunc(msgblocks[key])
-                    print("compare step result end")
+                    logger.info("[exec] compare step result end")
                 else:
                     exceptret = exceptfunc("")
                 if not exceptret:

@@ -639,7 +639,7 @@ class test_cli(ParametrizedTestCase):
                 os.remove(fpath+test_config.wallet_name_null)
             f = open(fpath+test_config.wallet_name_null, 'w')
             f.close()
-            API.cli().upgrade_wallet(filepath=test_config.wallet_name_null,password=test_config.wallet_password, exceptfunc = lambda msg: msg.find("error：Command not found upgrade") >= 0)
+            API.cli().upgrade_wallet(filepath=test_config.wallet_name_null,password=test_config.wallet_password, exceptfunc = lambda msg: msg.find("error") >= 0)
             (result, stepname, climsg) = API.cli().exec()
             logger.print(climsg)
             self.ASSERT(result, "error message not match")
@@ -700,7 +700,7 @@ class test_cli(ParametrizedTestCase):
 
     def test_030_rebuildindex(self):
         try:
-            API.cli().rebuild_index(exceptfunc = lambda msg: msg.find("You have to open the wallet first.") >= 0)
+            API.cli().rebuild_index(exceptfunc = lambda msg: msg.find("error") < 0)
             (result, stepname, climsg) = API.cli().exec()
             logger.print(climsg)
             self.ASSERT(result, "error message not match")
@@ -902,7 +902,7 @@ class test_cli(ParametrizedTestCase):
     def test_041_showutxo(self):
         try:
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_password)
-            API.cli().show_utxo(test_config.asset_notexist_id,exceptfunc = lambda msg: msg.find("No UTXO exists") >= 0)
+            API.cli().show_utxo(test_config.asset_notexist_id,exceptfunc = lambda msg: msg.find("0 UTXOs") >= 0)
             (result, stepname, climsg) = API.cli().exec()
             logger.print(climsg)
             self.ASSERT(result, "error message not match")
@@ -1382,20 +1382,19 @@ class test_cli(ParametrizedTestCase):
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             fp.close()        
             '''导出wallet_5.json的一个私钥'''
-            print("sssssssssssssssss")
             if os.path.exists(fpath+test_config.wallet_name_json):
                 os.remove(fpath+test_config.wallet_name_json)
             API.cli().create_wallet(filepath=test_config.wallet_name_json, password=test_config.wallet_password, password2=test_config.wallet_password, exceptfunc=(lambda msg: msg.find("address") >= 0))
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_password)
             API.cli().export_key(test_config.wallet_password,WalletManager().wallet(test_config.node_default).account().address(),None)
             (result, stepname, climsg) = API.cli().exec()
-            logger.print(climsg)            
+            logger.info("[test_058_importkey] climsg: {0}".format(climsg))
             self.ASSERT(result, "export key failed1")
             try:
-                str1 =climsg.split("********")[3].split("neo>")[0].strip()
+                str1 =climsg.split("********")[4].split("neo>")[0].strip()
             except:
                 self.ASSERT(False, "can not get key")
-            print(str1)            
+            logger.info("[test_058_importkey] export private key: " + str1)
             API.cli().terminate()
             '''wallet_5.json的私钥导入test.json'''
             API.cli().init(self._testMethodName, Config.NODES[test_config.node_default]["path"])
@@ -1404,7 +1403,7 @@ class test_cli(ParametrizedTestCase):
             '''导出test.json的私钥，与wallet_5.json的私钥对比'''            
             API.cli().export_key(test_config.wallet_password,exceptfunc=lambda msg: msg.find(str1)>= 0)
             (result, stepname, climsg) = API.cli().exec()
-            logger.print(climsg)            
+            logger.info("[test_058_importkey] climsg: {0}".format(climsg))
             self.ASSERT(result, "import key failed2")                         
         except AssertError as e:
             logger.error(e.msg)
