@@ -407,7 +407,7 @@ class test_cli(ParametrizedTestCase):
             f.write(indata)
             f.close()
             f1.close()
-            API.cli().open_wallet(test_config.wallet_name_exist_wrong, test_config.wallet_password, exceptfunc = lambda msg: msg.find("error") >= 0)
+            API.cli().open_wallet(test_config.wallet_name_exist_wrong, test_config.wallet_password, exceptfunc = lambda msg: msg.find("error") < 0)
             (result, stepname, climsg) = API.cli().exec()                
             logger.print(climsg)
             self.ASSERT(result, "error message not match")            
@@ -1568,7 +1568,7 @@ class test_cli(ParametrizedTestCase):
                 os.remove(fpath+test_config.path_wrong)
             f = open(fpath+test_config.path_wrong, 'w')
             API.cli().open_wallet(test_config.wallet_name_json, test_config.wallet_password)
-            API.cli().import_key(test_config.path_wrong,exceptfunc = lambda msg: msg.find("error") >=0 )
+            API.cli().import_key(test_config.path_wrong,exceptfunc = lambda msg: msg.find("error") < 0)
             (result, stepname, climsg) = API.cli().exec()
             logger.info("[test_065_importkey] climsg: {0}".format(climsg))
             fp.close()            
@@ -3842,7 +3842,7 @@ class test_cli(ParametrizedTestCase):
     def test_138_export_all_blocks(self):
         try:
             fp = open(test_config.ConfigPath+"/config.json", 'r', encoding='utf-8')
-            str=fp.read()
+            content=fp.read()
             fp.close()
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             path=Config.NODES[test_config.node_default]["walletname"]
@@ -3950,7 +3950,7 @@ class test_cli(ParametrizedTestCase):
     def test_139_export_all_blocks(self):
         try:
             fp = open(test_config.ConfigPath+"/config.json", 'r', encoding='utf-8')
-            str=fp.read()
+            content=fp.read()
             fp.close()
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             path=Config.NODES[test_config.node_default]["walletname"]
@@ -4058,7 +4058,7 @@ class test_cli(ParametrizedTestCase):
     def test_140_export_all_blocks(self):
         try:
             fp = open(test_config.ConfigPath+"/config.json", 'r', encoding='utf-8')
-            str=fp.read()
+            content=fp.read()
             fp.close()
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             path=Config.NODES[test_config.node_default]["walletname"]
@@ -4188,7 +4188,7 @@ class test_cli(ParametrizedTestCase):
     def test_142_export_all_blocks(self):
         try:
             fp = open(test_config.ConfigPath+"/config.json", 'r', encoding='utf-8')
-            str=fp.read()
+            content=fp.read()
             fp.close()
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             if os.path.exists(fpath+"chain.abc"):
@@ -4222,7 +4222,7 @@ class test_cli(ParametrizedTestCase):
     def test_144_export_blocks(self):
         try:
             fp = open(test_config.ConfigPath+"/config.json", 'r', encoding='utf-8')
-            str=fp.read()
+            content=fp.read()
             fp.close()
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             path=Config.NODES[test_config.node_default]["walletname"]
@@ -4342,7 +4342,7 @@ class test_cli(ParametrizedTestCase):
             shutil.copyfile(test_config.copypath+"chain.acc", fpath+"chain.acc")
             print ("copy file chain.acc success")
             #把protocol.json文件替换为SeedList未被删除的文件
-            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(node_index + 1) + "/protocol.json", fpath+"protocol.json")
+            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(test_config.node_default) + "/protocol.json", fpath+"protocol.json")
             #启动节点
             API.cli().init(self._testMethodName, Config.NODES[test_config.node_default]["path"])
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
@@ -4418,7 +4418,7 @@ class test_cli(ParametrizedTestCase):
     def test_148_export_blocks(self):
         try:
             fp = open(test_config.ConfigPath+"/config.json", 'r', encoding='utf-8')
-            str=fp.read()
+            content=fp.read()
             fp.close()
             fpath = Config.NODES[test_config.node_default]["path"].replace("neo-cli.dll", "")
             path=Config.NODES[test_config.node_default]["walletname"]
@@ -4538,7 +4538,7 @@ class test_cli(ParametrizedTestCase):
             shutil.copyfile(test_config.copypath+"chain.acc", fpath+"chain.acc")
             print ("copy file chain.acc success")
             #把protocol.json文件替换为SeedList未被删除的文件
-            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(node_index + 1) + "/protocol.json", fpath+"protocol.json")
+            shutil.copyfile(Config.RESOURCE_PATH + "/nodes/node" + str(test_config.node_default) + "/protocol.json", fpath+"protocol.json")
             #启动节点
             API.cli().init(self._testMethodName, Config.NODES[test_config.node_default]["path"])
             API.cli().open_wallet(test_config.wallet_default, test_config.wallet_pwd)
@@ -4756,7 +4756,7 @@ class test_cli(ParametrizedTestCase):
             API.cli().export_blocks("5","abc",exceptfunc=lambda msg: msg.find("error") >= 0)
             (result, stepname, msg) = API.cli().exec()
             logger.print(msg)
-            self.ASSERT(result,"assert not equal")
+            self.ASSERT(result,"message not match")
         except AssertError as e:
             logger.error(e.msg)
             self.ASSERT(False, "error:assert")
