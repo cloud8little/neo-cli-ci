@@ -48,7 +48,6 @@ class TestCaseRunner():
                 files = []
                 with open(filterfile) as f:
                     config_json = json.load(f)
-                    print(config_json)
                 for (key, value) in config_json.items():
                     if value:
                         files.append(key)
@@ -65,16 +64,14 @@ class TestCaseRunner():
                     pass
                 filter_condition["method"] = list(set(filter_condition["method"]))
 
-            print("[***Filter Condition***]\n{0}".format(filter_condition))
+            logger.info("[***Filter Condition***]\n{0}".format(filter_condition))
 
             for test_suite in test_suites:
                 if filter_condition["files"] == []:
                     continue
-                print("[***Test Suite***]: {0}".format(test_suite))
                 if filter_condition["files"] and test_suite._tests and test_suite._tests[-1]._tests and not str(test_suite._tests[-1]._tests[0].__class__).strip('<class \'').split('.')[-3] in filter_condition["files"]:
                     continue
                 for test_cases in test_suite:
-                    print(test_cases._tests)
                     if test_cases._tests and filter_condition["method"]:
                         filter_condition["method"].append("test_init")
                         filter_condition["method"] = list(set(filter_condition["method"]))
@@ -123,25 +120,22 @@ class TestCaseRunner():
                     needmonitor = True
 
         case_path = os.path.dirname(os.path.realpath(__file__))
-        print("[***case path***]\n" + case_path)
+        logger.info("[***case path***]\n" + case_path)
         try:
             test_suites = unittest.defaultTestLoader.discover(case_path,
                                                         pattern="test_main*.py",
                                                         top_level_dir=None)
         except Exception as e:
-            print("test discover", e)
+            logger.error("test discover", e)
 
         # catch load errors
-        print("[***TestLoader Errors***]\n{0}".format(unittest.defaultTestLoader.errors))
-
-        print("[***test_suites***]\n", test_suites)
-
+        logger.info("[***TestLoader Errors***]\n{0}".format(unittest.defaultTestLoader.errors))
         cases = self.filter_test_cases(test_suites, filterfile, filtertype, filterstr, excludestr)
         if cases is None:
-            print("no test case found...")
+            logger.error("no test case found...")
             return
 
-        print("[***Cases Count***]: {0}".format(len(cases)))
+        logger.info("[***Cases Count***]: {0}".format(len(cases)))
         runner = unittest.TextTestRunner()
 
         case_dirc = collections.OrderedDict()
@@ -154,7 +148,6 @@ class TestCaseRunner():
 
         for foldername in case_dirc.keys():
             start_time = time.time()
-            print(foldername, len(case_dirc[foldername]))
             monitor.exec(runner, case_dirc[foldername], needmonitor)
             end_time = time.time()
             timecost = end_time - start_time
