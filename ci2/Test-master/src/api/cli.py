@@ -129,7 +129,7 @@ class CLIApi:
         self.logfile.write("send \"" + str + "\\r\"" + "\n")
         pass
 
-    def writeexcept(self, str):
+    def writeexpect(self, str):
         self.logfile.write("expect \"" + str + "\"" + "\n")
         pass
 
@@ -143,7 +143,7 @@ class CLIApi:
     def waitnext(self, timeout=5, times=1):
         self.writeline("set timeout " + str(timeout))
         for index in range(times):
-            self.writeexcept("*neo>")
+            self.writeexpect("*neo>")
 
     def waitgenblock(self):
         self.waitnext(timeout=5, times=4)
@@ -306,13 +306,13 @@ class CLIApi:
         else:
             self.writesend("create wallet")
         # input password
-        self.writeexcept("*password:")
+        self.writeexpect("*password:")
         if password is not None:
             self.writesend(password)
         else:
             self.writesend("")
         # confirm password
-        self.writeexcept("*password:")
+        self.writeexpect("*password:")
         if password2 is not None:
             self.writesend(password2)
         else:
@@ -331,7 +331,7 @@ class CLIApi:
         else:
             self.writesend("open wallet")
         # input password
-        self.writeexcept("*password:")
+        self.writeexpect("*password:")
         if password is not None:
             self.writesend(password)
         else:
@@ -349,7 +349,7 @@ class CLIApi:
             self.writesend("upgrade wallet " + filepath)
         else:
             self.writesend("upgrade wallet")
-        self.writeexcept("*password:")
+        self.writeexpect("*password:")
         if password is not None:
             self.writesend(password)
         # register except function
@@ -496,7 +496,7 @@ class CLIApi:
         if path is not None:
             pathstr = path
         self.writesend("export key " + str(addressstr) + " " + str(pathstr))
-        self.writeexcept("*password:")
+        self.writeexpect("*password:")
         if password is not None:
             self.writesend(password)
         else:
@@ -524,7 +524,7 @@ class CLIApi:
             params.append(str(fee))
 
         self.writesend("send " + " ".join(params))
-        self.writeexcept("*password:")
+        self.writeexpect("*password:")
         if password is not None:
             self.writesend(password)
         else:
@@ -585,7 +585,7 @@ class CLIApi:
         self.begincmd(name)
         self.writesend("show state")
         for index in range(times):
-            self.writeexcept("block:*")
+            self.writeexpect("block:*")
         self.writesend("\n")
         # register except function
         self.stepexceptfuncs[name + "-" + str(self.stepindex)] = exceptfunc
