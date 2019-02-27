@@ -4,26 +4,26 @@ services:
   - docker
 jobs:
   include:
-    - stage: "Build"
+    - stage: "Build-Stage"
       name: "build docker image"
       script:
         - docker build -f ci2/consensus-container/Dockerfile -t consensus .
         - docker build -f ci2/ordinary-container/Dockerfile -t ordinary .
         - docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1 neonet
-    - stage: "Test"
-        name: "cli test normal"        
-        script:
-          - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-          - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_cli  normal
-      - script:
+    - stage: "Test-Stage"
+      name: "cli test normal"        
+      script:
         - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-        - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_cli  abnormal
-        name: "cli test abnormal"
-      - script:
-        - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-        - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc  normal
-        name: "rpc test normal"
-      - script:
-        - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-        - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc  abnormal
-        name: "rpc test abnormal"
+        - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_cli  normal
+    - script:
+      - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
+      - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_cli  abnormal
+      name: "cli test abnormal"
+    - script:
+      - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
+      - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc  normal
+      name: "rpc test normal"
+    - script:
+      - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
+      - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc  abnormal
+      name: "rpc test abnormal"
