@@ -1,0 +1,3 @@
+[submodule "ci2/neo-test"]
+	path = ci2/neo-test
+	url = git@github.com:superboyiii/NEO-TEST.git
