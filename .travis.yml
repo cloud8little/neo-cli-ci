@@ -26,21 +26,17 @@ jobs:
     name: cli test normal
     script:
     - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-    - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
-      test_cli  normal
+    - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_cli normal
   - script:
     - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-    - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
-      test_cli  abnormal
+    - docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_cli abnormal
     name: cli test abnormal
   - script:
     - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-    - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
-      test_rpc  normal
+    - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc normal
     name: rpc test normal
   - script:
     - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
-    - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
-      test_rpc  abnormal
+    - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc abnormal
     name: rpc test abnormal
 
