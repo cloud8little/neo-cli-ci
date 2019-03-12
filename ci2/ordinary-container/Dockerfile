@@ -14,20 +14,6 @@ RUN dotnet restore
 RUN dotnet publish -c Release
 WORKDIR /home/neo/neo-cli/bin/Release/netcoreapp2.1/publish
 RUN mv ./* /home/neo/neo-cli-build
-WORKDIR /home/neo/neo-cli-build
-RUN mkdir Plugins
-# build plugins
-WORKDIR /home/neo
-RUN git clone https://github.com/neo-project/neo-plugins.git
-WORKDIR ./neo-plugins
-# RUN dotnet publish -c Release --framework netstandard2.0 RpcWallet/
-# RUN cp -rf RpcWallet/bin/Release/netstandard2.0/RpcWallet.dll /home/neo/neo-cli-build/Plugins
-RUN dotnet publish -c Release --framework netstandard2.0 ImportBlocks/
-RUN cp -rf ImportBlocks/bin/Release/netstandard2.0/ImportBlocks.dll ImportBlocks/bin/Release/netstandard2.0/ImportBlocks /home/neo/neo-cli-build/Plugins/
-RUN dotnet publish -c Release --framework netstandard2.0 SimplePolicy/
-RUN cp -rf SimplePolicy/bin/Release/netstandard2.0/SimplePolicy.dll SimplePolicy/bin/Release/netstandard2.0/SimplePolicy /home/neo/neo-cli-build/Plugins/
-RUN dotnet publish -c Release --framework netstandard2.0 ApplicationLogs/
-RUN cp -rf ApplicationLogs/bin/Release/netstandard2.0/ApplicationLogs.dll ApplicationLogs/bin/Release/netstandard2.0/ApplicationLogs /home/neo/neo-cli-build/Plugins/
 # tar neo-cli
 WORKDIR /home/neo/neo-cli-build
 RUN tar -cvf neo-cli.tar.gz ./*
