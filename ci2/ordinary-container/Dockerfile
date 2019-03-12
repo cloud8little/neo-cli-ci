@@ -20,8 +20,8 @@ RUN mkdir Plugins
 WORKDIR /home/neo
 RUN git clone https://github.com/neo-project/neo-plugins.git
 WORKDIR ./neo-plugins
-RUN dotnet publish -c Release --framework netstandard2.0 RpcWallet/
-RUN cp -rf RpcWallet/bin/Release/netstandard2.0/RpcWallet.dll /home/neo/neo-cli-build/Plugins
+# RUN dotnet publish -c Release --framework netstandard2.0 RpcWallet/
+# RUN cp -rf RpcWallet/bin/Release/netstandard2.0/RpcWallet.dll /home/neo/neo-cli-build/Plugins
 RUN dotnet publish -c Release --framework netstandard2.0 ImportBlocks/
 RUN cp -rf ImportBlocks/bin/Release/netstandard2.0/ImportBlocks.dll ImportBlocks/bin/Release/netstandard2.0/ImportBlocks /home/neo/neo-cli-build/Plugins/
 RUN dotnet publish -c Release --framework netstandard2.0 SimplePolicy/
