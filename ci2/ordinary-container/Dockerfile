@@ -10,13 +10,18 @@ RUN chmod +x neo-test/src/test/run_test.sh
 # build neo-cli
 ADD neo-cli neo-cli/
 WORKDIR neo-cli
-RUN dotnet restore
-RUN dotnet publish -c Release
-WORKDIR /home/neo/neo-cli/bin/Release/netcoreapp2.1/publish
-RUN mv ./* /home/neo/neo-cli-build
+#RUN dotnet restore
+#RUN dotnet publish -c Release
+#WORKDIR /home/neo/neo-cli/bin/Release/netcoreapp2.1/publish
+#RUN mv ./* /home/neo/neo-cli-build
 # tar neo-cli
-WORKDIR /home/neo/neo-cli-build
-RUN tar -cvf neo-cli.tar.gz ./*
+# Jessica modify
+RUN wget https://github.com/neo-project/neo-cli/releases/download/v2.10.2-preview3/neo-cli-linux-x64-preview.zip
+RUN unzip neo-cli-linux-x64-preview.zip
+RUN cd neo-cli-preview
+RUN tar -zcvf neo-cli.tar.gz ./*
+#WORKDIR /home/neo/neo-cli-build
+#RUN tar -cvf neo-cli.tar.gz ./*
 RUN cp neo-cli.tar.gz /home/neo/neo-test/src/resource/nodes/
 RUN cp neo-cli.tar.gz /home/neo/neo-test/src/resource/nodes/neo-cli2.tar.gz
 WORKDIR /home/neo/neo-test/
