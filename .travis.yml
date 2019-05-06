@@ -10,7 +10,7 @@ before_install:
 install:
 - git clone git@github.com:superboyiii/NEO-TEST.git ./ci2/neo-test
 - cd ./ci2/neo-test/
-- git checkout master
+- git checkout integration
 - cd ../../
 - docker build -f ci2/consensus-container/Dockerfile -t consensus .
 - docker build -f ci2/ordinary-container/Dockerfile -t ordinary .
