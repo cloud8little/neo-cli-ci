@@ -2,19 +2,20 @@ sudo: required
 services:
 - docker
 before_install:
-- openssl aes-256-cbc -K $encrypted_5288b85c8e66_key -iv $encrypted_5288b85c8e66_iv
+- openssl aes-256-cbc -K $encrypted_605a9270f9b0_key -iv $encrypted_605a9270f9b0_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 - eval `ssh-agent -s`
 - ssh-add ~/.ssh/id_rsa
 install:
-- git clone git@github.com:superboyiii/NEO-TEST.git ./ci2/neo-test
-- cd ./ci2/neo-test/
+- git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
+- cd ./neo-test/
 - git checkout packtest
-- cd ../../
-- docker build -f ci2/consensus-container/Dockerfile -t consensus .
-- docker build -f ci2/ordinary-container/Dockerfile -t ordinary .
-- docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1 neonet
+- cd ..
+- docker build -f consensus-container/Dockerfile -t consensus .
+- docker build -f ordinary-container/Dockerfile -t ordinary .
+- docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1
+  neonet
 jobs:
   include:
   - stage: Build-Stage
@@ -37,4 +38,3 @@ jobs:
     - docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
     - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh test_rpc abnormal
     name: rpc test abnormal
-

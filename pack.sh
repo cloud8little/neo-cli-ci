@@ -1,6 +1,6 @@
 #!/bin/bash
 CLIVERSION="v2.10.2-preview3"
-PLUGINS=("SimplePolicy@v2.10.1")
+PLUGINS=("SimplePolicy@v2.10.1" "ImportBlocks@v2.10.1")
 # download neo-cli
 if [[ $CLIVERSION =~ "preview" ]] 
 then
