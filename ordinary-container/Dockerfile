@@ -9,6 +9,7 @@ RUN chmod +x neo-test/src/test/run_test.sh
 # prepare neo-cli
 ADD pack.sh .
 RUN chmod +x pack.sh
+RUN ./pack.sh
 RUN tar -zcvf neo-cli.tar.gz neo-cli/*
 RUN cp neo-cli.tar.gz /home/neo/neo-test/src/resource/nodes/
 RUN cp neo-cli.tar.gz /home/neo/neo-test/src/resource/nodes/neo-cli2.tar.gz
