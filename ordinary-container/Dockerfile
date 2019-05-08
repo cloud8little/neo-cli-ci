@@ -2,7 +2,7 @@ FROM kickseason/dotnetandpython:latest
 WORKDIR /home/neo
 RUN mkdir nodes
 # add test framework
-ADD ci2/neo-test neo-test/
+ADD ./neo-test neo-test/
 RUN chmod +x neo-test/service/run_output.sh
 RUN chmod +x neo-test/run_test.sh
 RUN chmod +x neo-test/src/test/run_test.sh

@@ -8,12 +8,12 @@ before_install:
 - eval `ssh-agent -s`
 - ssh-add ~/.ssh/id_rsa
 install:
-- git clone git@github.com:superboyiii/NEO-TEST.git ./ci2/neo-test
-- cd ./ci2/neo-test/
+- git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
+- cd ./neo-test/
 - git checkout packtest
-- cd ../../
-- docker build -f ci2/consensus-container/Dockerfile -t consensus .
-- docker build -f ci2/ordinary-container/Dockerfile -t ordinary .
+- cd ..
+- docker build -f consensus-container/Dockerfile -t consensus .
+- docker build -f ordinary-container/Dockerfile -t ordinary .
 - docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1
   neonet
 jobs:
