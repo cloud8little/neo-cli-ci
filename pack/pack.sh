@@ -46,7 +46,8 @@ else
     for file in $dir
     do
         if $file == "Plugins"
-            cp -r $PATH/Plugins/. Plugins
+        then
+            cp -r $WORKDIR/Plugins/. Plugins
         fi
     done   
 fi
