@@ -1,5 +1,5 @@
 #!/bin/bash
-PATH=$(pwd)
+WORKDIR=$(pwd)
 CLIVERSION="v2.10.2-preview3"
 # release - will use the zip package from neo web portal
 # local - will use the tar.gz file from local file under cloud8little: neo-cli-ci/neo-cli.tar.gz
@@ -42,7 +42,7 @@ then
         rm ${name}.zip
     done
 else
-    dir=$(ls -l $PATH |awk '/^d/ {print $NF}')
+    dir=$(ls -l $WORKDIR |awk '/^d/ {print $NF}')
     for file in $dir
     do
         if $file == "Plugins"
