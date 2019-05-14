@@ -45,7 +45,7 @@ else
     dir=$(ls -l $WORKDIR |awk '/^d/ {print $NF}')
     for file in $dir
     do
-        if $file == "Plugins"
+        if [ "$file" == "Plugins" ]
         then
             cp -r $WORKDIR/Plugins/. Plugins
         fi
