@@ -27,12 +27,12 @@ else
     unzip neo-cli-linux-x64.zip
 fi
 cd neo-cli
-mkdir Plugins
 # install plugins
 # https://github.com/neo-project/neo-plugins/releases/download/v2.10.1/ApplicationLogs.zip
 
 if [[ $PLUGINS_OPTION == "install" ]]
 then
+    mkdir Plugins
     for plugin in ${PLUGINS[@]} 
     do
         name=${plugin%%@*}
@@ -42,13 +42,5 @@ then
         rm ${name}.zip
     done
 else
-    cp -r $PLUGINDIR/Plugins/* Plugins
-    #dir=$(ls -l $WORKDIR |awk '/^d/ {print $NF}')
-    #for file in $dir
-    #do
-    #    if [ "$file" == "Plugins" ]
-    #    then
-    #        cp -r $WORKDIR/Plugins/. Plugins
-    #    fi
-    #done   
+    cp -r $PLUGINDIR/Plugins ./
 fi
