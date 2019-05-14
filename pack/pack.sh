@@ -42,7 +42,7 @@ then
         rm ${name}.zip
     done
 else
-    cp -r $PLUGINDIR/Plugins/. Plugins
+    cp -r $PLUGINDIR/Plugins/* Plugins
     #dir=$(ls -l $WORKDIR |awk '/^d/ {print $NF}')
     #for file in $dir
     #do
