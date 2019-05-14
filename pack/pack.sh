@@ -42,12 +42,13 @@ then
         rm ${name}.zip
     done
 else
-    dir=$(ls -l $WORKDIR |awk '/^d/ {print $NF}')
-    for file in $dir
-    do
-        if [ "$file" == "Plugins" ]
-        then
-            cp -r $WORKDIR/Plugins/. Plugins
-        fi
-    done   
+    cp -r $WORKDIR/Plugins/. Plugins
+    #dir=$(ls -l $WORKDIR |awk '/^d/ {print $NF}')
+    #for file in $dir
+    #do
+    #    if [ "$file" == "Plugins" ]
+    #    then
+    #        cp -r $WORKDIR/Plugins/. Plugins
+    #    fi
+    #done   
 fi
