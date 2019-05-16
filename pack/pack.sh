@@ -1,6 +1,6 @@
 #!/bin/bash
 PLUGINDIR=$(pwd)
-CLIVERSION="v2.10.2-preview3"
+CLIVERSION="v2.10.2-preview4"
 # release - will use the zip package from neo web portal
 # local - will use the tar.gz file from local file under cloud8little: neo-cli-ci/neo-cli.tar.gz
 NEO_CLI_OPTION="release"
