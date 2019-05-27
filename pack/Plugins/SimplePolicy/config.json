@@ -2,12 +2,8 @@
   "PluginConfiguration": {
     "MaxTransactionsPerBlock": 500,
     "MaxFreeTransactionsPerBlock": 20,
-    "MaxFreeTransactionSize": 1024,
-    "FeePerExtraByte": 0.00001,
-    "HighPriorityTxType":
-    [
-        "ClaimTransaction"
-    ],
+    "MaxFreeTransactionSize": 1024000,
+    "FeePerExtraByte": 0,
     "BlockedAccounts": {
       "Type": "AllowAll",
       "List": []
