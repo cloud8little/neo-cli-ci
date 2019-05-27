@@ -19,13 +19,20 @@ fi
 
 wget $CLIURL
 
-if [[ $CLIVERSION =~ "preview" ]] 
+if [[ $NEO_CLI_OPTION == "release" ]]
 then
-    unzip neo-cli-linux-x64-preview.zip
-    mv neo-cli-preview neo-cli
+    if [[ $CLIVERSION =~ "preview" ]] 
+    then
+        unzip neo-cli-linux-x64-preview.zip
+        mv neo-cli-preview neo-cli
+    else
+        unzip neo-cli-linux-x64.zip
+    fi
 else
+    cp $PLUGINDIR/neo-cli-linux-x64.zip ./
     unzip neo-cli-linux-x64.zip
-fi
+fi    
+
 cd neo-cli
 # install plugins
 # https://github.com/neo-project/neo-plugins/releases/download/v2.10.1/ApplicationLogs.zip
