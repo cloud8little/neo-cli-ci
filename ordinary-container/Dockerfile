@@ -9,6 +9,8 @@ RUN chmod +x neo-test/src/test/run_test.sh
 # prepare neo-cli
 ADD pack/pack.sh .
 COPY pack/Plugins ./Plugins
+# enable local build testing Jessica
+COPY pack/neo-cli-linux-x64-build.zip ./neo-cli-linux-x64-build.zip  
 RUN chmod +x pack.sh
 RUN ./pack.sh
 RUN tar -C neo-cli -zcvf neo-cli.tar.gz .
