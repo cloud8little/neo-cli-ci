@@ -2,11 +2,11 @@ sudo: required
 services:
 - docker
 before_install:
-- openssl aes-256-cbc -K $encrypted_2b37a12b84be_key -iv $encrypted_2b37a12b84be_iv
-  -in .travis/github_deploy_key.enc -out ~/.ssh/github_deploy_key -d
-- chmod 600 ~/.ssh/github_deploy_key
+- openssl aes-256-cbc -K $encrypted_4ac443e3798c_key -iv $encrypted_4ac443e3798c_iv
+  -in id_rsa.enc -out id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
 - eval $(ssh-agent)
-- ssh-add ~/.ssh/github_deploy_key
+- ssh-add ~/.ssh/id_rsa
 - cp .travis/ssh_config ~/.ssh/config
 - git config --global user.name "cloud8little"
 - git config --global user.email "413074538@qq.com"
@@ -45,6 +45,3 @@ jobs:
     - docker run --name rpc_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
       test_rpc abnormal
     name: rpc test abnormal
-dd:
-- openssl aes-256-cbc -K $encrypted_2b37a12b84be_key -iv $encrypted_2b37a12b84be_iv
-  -in github_deploy_key.enc -out ~\/github_deploy_key -d
