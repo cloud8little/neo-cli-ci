@@ -10,9 +10,7 @@ NEO_CLI_OPTION="release"
 #PLUGINS_OPTION="local"
 PLUGINS_OPTION="install"
 
-PLUGINS=("SimplePolicy@v2.10.1" "ImportBlocks@v2.10.1" "RpcWallet@v2.10.1")
-
-wget $CLIURL
+PLUGINS=("SimplePolicy@v2.10.2" "ImportBlocks@v2.10.2" "RpcWallet@v2.10.2")
 
 if [[ $NEO_CLI_OPTION == "release" ]]
 then
@@ -23,6 +21,7 @@ then
     else
         CLIURL="https://github.com/neo-project/neo-cli/releases/download/"${CLIVERSION}"/neo-cli-linux-x64.zip"
     fi
+    wget $CLIURL
     if [[ $CLIVERSION =~ "preview" ]] 
     then
         unzip neo-cli-linux-x64-preview.zip
