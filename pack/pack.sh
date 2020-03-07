@@ -3,8 +3,9 @@ PLUGINDIR=$(pwd)
 CLIVERSION="v2.10.2"
 # release - will use the zip package from neo web portal
 # local - will use the tar.gz file from local file under cloud8little: neo-cli-ci/neo-cli.tar.gz
-NEO_CLI_OPTION="release"
+#NEO_CLI_OPTION="release"
 #NEO_CLI_OPTION="local"
+NEO_CLI_OPTION="build"
 # install - will install plugins when start neo-cli;
 # local - will use the Plugins file from local file under cloud8little: neo-cli-cli/Plugins;
 #PLUGINS_OPTION="local"
@@ -29,9 +30,15 @@ then
     else
         unzip neo-cli-linux-x64.zip
     fi
-else
+elif [[ $NEO_CLI_OPTION == "local" ]]
+then
     cp $PLUGINDIR/neo-cli-linux-x64.zip ./
     unzip neo-cli-linux-x64.zip
+else
+    git clone git@github.com:neo-project/neo-node.git ./neo-node
+    cd neo-node/neo-cli
+    dotnet restore
+    dotnet publish
 fi    
 
 cd neo-cli
