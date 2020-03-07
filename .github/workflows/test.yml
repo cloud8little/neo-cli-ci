@@ -20,15 +20,19 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Config Git Environment
+      env:
+          ACTION_DEPLOY_KEY: ${{secrets.ACTION_DEPLOY_KEY}}
+      run: |
+          mkdir -p ~/.ssh/
+          echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name "cloud8little"
+          git config --global user.email "413074538@qq.com"
     - name: Copy Test Repo
       run: |
-        openssl aes-256-cbc -K $encrypted_4ac443e3798c_key -iv $encrypted_4ac443e3798c_iv -in .travis/id_rsa.enc -out ~/.ssh/id_rsa -d 
-        chmod 600 ~/.ssh/id_rsa
-        eval $(ssh-agent)
-        ssh-add ~/.ssh/id_rsa
-        cp .travis/ssh_config ~/.ssh/config
-        git config --global user.name "cloud8little"
-        git config --global user.email "413074538@qq.com"
+        git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
         
     - name: Install
       run: |
