@@ -1,34 +1,36 @@
-# This is a basic workflow to help you get started with Actions
+name: CI of Build, Deploy, Test
 
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request 
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+env: 
+  DOTNET_VERSION: 3.0.100
+
 jobs:
-  # This workflow contains a single job called "build"
+
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: git clone git@github.com:cloud8little/NEO-TEST.git ./neo-test
-    - run: cd ./neo-test/
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Copy Test Repo
+      run: |
+        openssl aes-256-cbc -K $encrypted_4ac443e3798c_key -iv $encrypted_4ac443e3798c_iv -in .travis/id_rsa.enc -out ~/.ssh/id_rsa -d 
+        chmod 600 ~/.ssh/id_rsa
+        eval $(ssh-agent)
+        ssh-add ~/.ssh/id_rsa
+        cp .travis/ssh_config ~/.ssh/config
+        git config --global user.name "cloud8little"
+        git config --global user.email "413074538@qq.com"
+        
+    - name: Install
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
