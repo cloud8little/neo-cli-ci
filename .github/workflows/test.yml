@@ -22,10 +22,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Config Git Environment
       env:
-          ACTION_DEPLOY_KEY: ${{secrets.WIN10_KEY}}
+          ACTION_DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
       run: |
           mkdir -p ~/.ssh/
-          echo "$WIN10_KEY" > ~/.ssh/id_rsa
+          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name "cloud8little"
