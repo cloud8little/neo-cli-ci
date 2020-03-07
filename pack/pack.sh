@@ -35,7 +35,7 @@ then
     cp $PLUGINDIR/neo-cli-linux-x64.zip ./
     unzip neo-cli-linux-x64.zip
 else
-    git clone git@github.com:neo-project/neo-node.git ./neo-node
+    git clone https://github.com/neo-project/neo-node.git ./neo-node
     cd neo-node/neo-cli
     dotnet restore
     dotnet publish
