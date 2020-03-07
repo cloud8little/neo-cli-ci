@@ -25,7 +25,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
-           cd ./neo-test/
+    - run: cd ./neo-test/
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
