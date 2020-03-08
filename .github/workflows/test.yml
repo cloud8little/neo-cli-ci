@@ -30,7 +30,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name "cloud8little"
           git config --global user.email "413074538@qq.com"
-    - name: Copy Test Repo
+    - name: Copy Test Repo and Build docker image and Run test cases
       run: |
         git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
         cd ./neo-test/
@@ -39,8 +39,6 @@ jobs:
         docker build -f consensus-container/Dockerfile -t consensus .
         docker build -f ordinary-container/Dockerfile -t ordinary .
         docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1 neonet
-        
-    - name: Build docker image and Run test cases
-      run: |
         docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
         docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
+
