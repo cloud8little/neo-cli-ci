@@ -40,7 +40,7 @@ jobs:
         docker build -f ordinary-container/Dockerfile -t ordinary .
         docker network create --driver bridge --subnet=172.18.12.0/16 --gateway=172.18.1.1 neonet
         
-    - name: Install
+    - name: Build docker image and Run test cases
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        docker run -d --name cns --network=neonet --ip 172.18.12.1 consensus
+        docker run --name cli_test --network=neonet --ip 172.18.12.2 ordinary ./run_test.sh
