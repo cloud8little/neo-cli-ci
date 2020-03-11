@@ -9,7 +9,7 @@ NEO_CLI_OPTION="build"
 # install - will install plugins when start neo-cli;
 # local - will use the Plugins file from local file under cloud8little: neo-cli-cli/Plugins;
 #PLUGINS_OPTION="local"
-PLUGINS_OPTION="install"
+PLUGINS_OPTION="build"
 
 PLUGINS=("SimplePolicy@v2.10.2" "ImportBlocks@v2.10.2" "RpcWallet@v2.10.2")
 
