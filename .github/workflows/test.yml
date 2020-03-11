@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 env: 
-  DOTNET_VERSION: 3.0.100
+  DOTNET_VERSION: 3.1.100
 
 jobs:
 
@@ -32,6 +32,7 @@ jobs:
           git config --global user.email "413074538@qq.com"
     - name: Copy Test Repo and Build docker image and Run test cases
       run: |
+        dotnet --version
         git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
         cd ./neo-test/
         git checkout packtest
