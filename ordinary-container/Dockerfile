@@ -1,4 +1,4 @@
-FROM cloud8little/dotnetandpython:latest
+FROM cloud8little/dotnetandpython:neo
 WORKDIR /home/neo
 RUN mkdir nodes
 # add test framework
