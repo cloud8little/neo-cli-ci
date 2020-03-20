@@ -2,9 +2,8 @@ name: CI of Build, Deploy, Test
 
 on:
   push:
-    branches: [ master ]
+    branches: master
   pull_request:
-    branches: [ master ]
 
 env: 
   DOTNET_VERSION: 3.1.100
