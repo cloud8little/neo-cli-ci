@@ -42,6 +42,7 @@ jobs:
         dotnet --version
         git clone git@github.com:superboyiii/NEO-TEST.git ./neo-test
         cd ./neo-test/
+        ls
         git checkout packtest
         cd ..
         docker build -f consensus-container/Dockerfile -t consensus .
